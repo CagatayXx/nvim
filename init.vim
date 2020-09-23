@@ -233,7 +233,6 @@ let g:closetag_close_shortcut = '<leader>>'
 " Next and Previous Buffer Keys
   map <TAB> :bn<CR>
   map <S-TAB> :bp<CR>
-  map <C> <S-TAB> :bp<CR>
 
 " FZF Key
   map <C-p> :FZF<CR>
