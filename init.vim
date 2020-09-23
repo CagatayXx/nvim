@@ -1,13 +1,4 @@
 source $HOME/.config/nvim/vim-plug/plugins.vim
-
-" auto-install vim-plug
-if empty(glob('~/.config/nvim/autoload/plug.vim'))
-  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  "autocmd VimEnter * PlugInstall
-  "autocmd VimEnter * PlugInstall | source $MYVIMRC
-endif
-
 " TextEdit might fail if hidden is not set.
 set hidden
 
@@ -129,8 +120,8 @@ omap ac <Plug>(coc-classobj-a)
 
 " Use CTRL-S for selections ranges.
 " Requires 'textDocument/selectionRange' support of language server.
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
+"nmap <silent> <C-s> <Plug>(coc-range-select)
+"xmap <silent> <C-s> <Plug>(coc-range-select)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
@@ -173,6 +164,14 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " For window transition
   map <C-h> :wincmd h<CR>
   map <C-l> :wincmd l<CR>
+" --------------------------------------------------------------------------------------------------------------------
+
+" Airline Settings
+  let g:airline#extensions#tabline#enabled = 1
+  let g:airline#extensions#tabline#left_sep = ' '
+  let g:airline#extensions#tabline#left_alt_sep = '|'
+  let g:airline#extensions#tabline#formatter = 'default'
+
 
 " NERDTree Settings
   " Remove arrows
@@ -230,6 +229,11 @@ let g:closetag_shortcut = '>'
 let g:closetag_close_shortcut = '<leader>>'
 
 " -------------------------------------------------------------
+
+" Next and Previous Buffer Keys
+  map <TAB> :bn<CR>
+  map <S-TAB> :bp<CR>
+  map <C> <S-TAB> :bp<CR>
 
 " FZF Key
   map <C-p> :FZF<CR>

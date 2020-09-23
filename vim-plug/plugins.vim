@@ -1,5 +1,9 @@
 call plug#begin('~/.config/nvim/autoload/plugged')
 
+  " Airline
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
+
   " for Better Syntax
   Plug 'sheerun/vim-polyglot'
 
