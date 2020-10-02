@@ -12,6 +12,11 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
   "NERDTree
   Plug 'preservim/nerdtree'
+  " Icons
+  Plug 'ryanoasis/vim-devicons'
+
+  " Emeet for Better HTML
+  Plug 'mattn/emmet-vim'
 
   " File Search with FZF
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -20,8 +25,14 @@ call plug#begin('~/.config/nvim/autoload/plugged')
   " Word Search with Ack
   Plug 'mileszs/ack.vim'
 
+  " Tag Highlighter
+  Plug 'Valloric/MatchTagAlways'
+
   " Close Tags
   Plug 'alvan/vim-closetag'
+
+  " React Snippets -----------------------------------------------------------
+  Plug 'mlaursen/vim-react-snippets'
 
   " Whichkey
   "Plug 'liuchengxu/vim-which-key'

@@ -154,6 +154,7 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 "nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 "nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+" --------------------------------------------------------------------------------------------------------------------
 
 " for Whichkey
 "let g:maleader = "\<Space>"
@@ -164,7 +165,6 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " For window transition
   map <C-h> :wincmd h<CR>
   map <C-l> :wincmd l<CR>
-" --------------------------------------------------------------------------------------------------------------------
 
 " Airline Settings
   let g:airline#extensions#tabline#enabled = 1
@@ -179,11 +179,27 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
   let g:NERDTreeDirArrowCollapsible = ' '
   " Open NERDTree Automatically
   autocmd vimenter * NERDTree
-  autocmd VimEnter * if argc() != 0 && !exists("s:std_in") | wincmd l | endif
+  autocmd vimenter * :wincmd l
+  "autocmd VimEnter * if argc() != 0 && !exists("s:std_in") | wincmd l | endif
   " NERDTree Key
   map <C-e> :NERDTreeToggle<CR>
   " Close vim if the only window is NERDTree
   autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+  " Open File or Folder with Space Key
+  let NERDTreeMapActivateNode='<space>'
+
+" Tag Highlighter
+  let g:mta_use_matchparen_group = 1
+  let g:mta_filetypes = {
+    \ 'html' : 1,
+    \ 'xhtml' : 1,
+    \ 'xml' : 1,
+    \ 'jinja' : 1,
+    \ 'js' : 1,
+    \ 'jsx' : 1,
+    \ 'ts' : 1,
+    \ 'tsx' : 1,
+    \}
 
 " Closetag Settings -------------------------------------------
 
@@ -233,23 +249,69 @@ let g:closetag_close_shortcut = '<leader>>'
 " Next and Previous Buffer Keys
   map <TAB> :bn<CR>
   map <S-TAB> :bp<CR>
+  map <C-d> :call CleanClose(1)<CR>
+  map <C-d> :call CleanClose(0)<CR>
 
-" FZF Key
+  function! CleanClose(tosave)
+  if (a:tosave == 1)
+      w!
+  endif
+  let todelbufNr = bufnr("%")
+  let newbufNr = bufnr("#")
+  if ((newbufNr != -1) && (newbufNr != todelbufNr) && buflisted(newbufNr))
+      exe "b".newbufNr
+  else
+      bnext
+  endif
+
+  if (bufnr("%") == todelbufNr)
+      new
+  endif
+  exe "bd".todelbufNr
+  endfunction
+
+" ********************************************************************
+
+" FZF Finder
   map <C-p> :FZF<CR>
+  map <C-g> :GFiles<CR>
+  map <C-f> :Rg<CR>
+  "map <C-p> :FGFilesZF<CR>
+
+" Uncomment the following to have Vim jump to the last position when
+" reopening a file
+"if has("autocmd")
+" au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+"endif
+":autocmd BufEnter * silent! normal! g`"
+
+" Press ESC to Close Search Highlight
+  nnoremap <esc> :noh<return><esc>
+
+" Remember Last Buffers
+  exec 'set viminfo=%,' . &viminfo
+  set viminfo^=%
 
 " ESLint and Prettier
 let g:ale_fixers = {
  \ 'javascript': ['eslint']
  \ }
  
-let g:ale_sign_error = '❌'
-let g:ale_sign_warning = '⚠️'
+let g:ale_sign_error = '✘'
+
+let g:ale_sign_warning = '⚠'
 
 let g:ale_fix_on_save = 1
 
-"Show Numbers
+"Show Numbers and Highlight the Current Line
 set number
+set cursorline
+
+" Save for Ctrl-S
+map <C-s> :w<CR>
+
 
 "Themes
 colo gruvbox
 syntax on
+
