@@ -34,6 +34,9 @@ call plug#begin('~/.config/nvim/autoload/plugged')
   " React Snippets -----------------------------------------------------------
   Plug 'mlaursen/vim-react-snippets'
 
+  "Auto Paranthesis Padding
+  Plug 'jiangmiao/auto-pairs'
+
   " Whichkey
   "Plug 'liuchengxu/vim-which-key'
   " On-demand lazy load

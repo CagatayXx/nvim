@@ -246,6 +246,9 @@ let g:closetag_close_shortcut = '<leader>>'
 
 " -------------------------------------------------------------
 
+" Buffers key
+  map <C-b> :Buffers<CR>
+
 " Next and Previous Buffer Keys
   map <TAB> :bn<CR>
   map <S-TAB> :bp<CR>
@@ -306,6 +309,9 @@ let g:ale_fix_on_save = 1
 "Show Numbers and Highlight the Current Line
 set number
 set cursorline
+
+" NERDTree show hidden files
+let NERDTreeShowHidden=1
 
 " Save for Ctrl-S
 map <C-s> :w<CR>
