@@ -8,7 +8,10 @@ call plug#begin('~/.config/nvim/autoload/plugged')
   Plug 'sheerun/vim-polyglot'
 
   " ESLint and Prettier
-  Plug 'w0rp/ale'
+   " Plug 'w0rp/ale'
+   
+  " Git Entegration
+  Plug 'airblade/vim-gitgutter'
 
   "NERDTree
   Plug 'preservim/nerdtree'
@@ -25,12 +28,19 @@ call plug#begin('~/.config/nvim/autoload/plugged')
   " Word Search with Ack
   Plug 'mileszs/ack.vim'
 
+  " Fast Comment Line Tool
+  Plug 'preservim/nerdcommenter'
+  
   " Tag Highlighter
   Plug 'Valloric/MatchTagAlways'
 
   " Close Tags
   Plug 'alvan/vim-closetag'
 
+  " Session Management
+  Plug 'xolox/vim-misc'
+  Plug 'xolox/vim-session'
+  
   " React Snippets -----------------------------------------------------------
   Plug 'mlaursen/vim-react-snippets'
 
@@ -45,8 +55,11 @@ call plug#begin('~/.config/nvim/autoload/plugged')
   " Intellisense with coc
   " Use release branch (recommend)
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 
   "Gruvbox Theme
   Plug 'morhetz/gruvbox'
+  Plug 'joshdick/onedark.vim'
+  " Plug 'sonph/onehalf', {'rtp': 'vim/'}
 
 call plug#end()

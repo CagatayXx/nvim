@@ -137,6 +137,27 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
+let g:coc_global_extensions = [
+  \ 'coc-snippets',
+  \ 'coc-pairs',
+  \ 'coc-tsserver',
+  \ 'coc-eslint', 
+  \ 'coc-prettier', 
+  \ 'coc-json', 
+  \ 'coc-css', 
+  \ 'coc-stylelint', 
+  \ ]
+
+if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
+  let g:coc_global_extensions += ['coc-prettier']
+endif
+
+if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
+  let g:coc_global_extensions += ['coc-eslint']
+endif
+
+" autocmd FileType scss setl iskeyword-=@-@
+
 " Mappings for CoCList
 " Show all diagnostics.
 "nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
@@ -177,14 +198,19 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
   " Remove arrows
   let g:NERDTreeDirArrowExpandable = ' '
   let g:NERDTreeDirArrowCollapsible = ' '
+
   " Open NERDTree Automatically
   autocmd vimenter * NERDTree
   autocmd vimenter * :wincmd l
-  "autocmd VimEnter * if argc() != 0 && !exists("s:std_in") | wincmd l | endif
+
+  " When File Opens Close NERDTRee Tab
+  "let NERDTreeQuitOnOpen=1
+
+  "a" utocmd VimEnter * if argc() != 0 && !exists("s:std_in") | wincmd l | endif
   " NERDTree Key
   map <C-e> :NERDTreeToggle<CR>
   " Close vim if the only window is NERDTree
-  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+  "autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
   " Open File or Folder with Space Key
   let NERDTreeMapActivateNode='<space>'
 
@@ -247,7 +273,7 @@ let g:closetag_close_shortcut = '<leader>>'
 " -------------------------------------------------------------
 
 " Buffers key
-  map <C-b> :Buffers<CR>
+  map <C-a> :Buffers<CR>
 
 " Next and Previous Buffer Keys
   map <TAB> :bn<CR>
@@ -280,6 +306,7 @@ let g:closetag_close_shortcut = '<leader>>'
   map <C-g> :GFiles<CR>
   map <C-f> :Rg<CR>
   "map <C-p> :FGFilesZF<CR>
+  " let $FZF_DEFAULT_COMMAND = 'fd --ignore-file'
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
@@ -292,32 +319,111 @@ let g:closetag_close_shortcut = '<leader>>'
   nnoremap <esc> :noh<return><esc>
 
 " Remember Last Buffers
-  exec 'set viminfo=%,' . &viminfo
-  set viminfo^=%
+"exec 'set viminfo=%,' . &viminfo
+"set viminfo^=%
 
 " ESLint and Prettier
-let g:ale_fixers = {
- \ 'javascript': ['eslint']
- \ }
- 
-let g:ale_sign_error = '✘'
+" let g:ale_fixers = {
+"  \ 'scss': ['prettier', 'eslint']
+"  \ }
+"
+" let g:ale_linters = {
+"  \ 'scss': ['prettier', 'eslint']
+"  \ }
 
-let g:ale_sign_warning = '⚠'
+" \ 'scss': ['prettier']
+
+let g:ale_sign_error = ' ' 
+" ✘
+
+let g:ale_sign_warning = ' '
+" ⚠
 
 let g:ale_fix_on_save = 1
-
-"Show Numbers and Highlight the Current Line
-set number
-set cursorline
 
 " NERDTree show hidden files
 let NERDTreeShowHidden=1
 
-" Save for Ctrl-S
+" ------------------------------------------------------------
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1
+
+let mapleader=";"
+set timeout timeoutlen=1500
+
+" ------------------------------------------------------------
+
+" Session Management
+let g:session_autoload = 'no'
+let g:session_autosave_periodic = 'yes'
+let g:session_autosave = 'yes'
+let g:session_lock_enabled = 'no'
+autocmd VimLeavePre * :NERDTreeClose
+"autocmd VimLeave * :SaveSession
+
+"autocmd VimEnter * mkdir
+
+"set nocompatible
+"set wildmenu
+"set wildmode=full
+"syntax on
+"filetype plugin on
+
+"let g:session_dir = '~/vim-sessions/'
+"exec 'nnoremap <Leader>ss :mks! ' . g:session_dir . '*.vim<C-D><BS><BS><BS><BS><BS>'
+"exec 'nnoremap <Leader>sr :so ' . g:session_dir . '*.vim<C-D><BS><BS><BS><BS><BS>'
+
+"let g:session_directory = '~/vim-sessions/'
+
+"let g:session_directory="~/vim-sessions/"
+"let g:session_lock_directory="~/vim-sessions/"
+
+" Cursor Blinking
+"set guicursor+=a:-blinkwait175-blinkoff150-blinkon175
+
+" Hide Cursor When Focus to Another Window
+" autocmd BufEnter * set cursorline
+" autocmd BufLeave * set nocursorline
+
+"Show Numbers and Highlight the Current Line
+set number
+set relativenumber
+set cursorline
+
+" Save on Ctrl-S
 map <C-s> :w<CR>
 
+" console.log shortcut
+"imap clg console.log()<Esc><S-f>(a
+" Console log from visual mode on next line, puts visual selection inside parentheses
+"vmap clg yocll<Esc>p
+" Console log from normal mode, inserted on next line with word your on inside parentheses
+"nmap clg yiwocll<Esc>p
 
 "Themes
-colo gruvbox
+" colo gruvbox
+colorscheme gruvbox
+"let g:airline_theme='onehalfdark'
 syntax on
 
